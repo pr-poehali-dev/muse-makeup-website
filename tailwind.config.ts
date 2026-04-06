@@ -7,6 +7,7 @@ export default {
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
+			"./1775483446260060691.html"
 	],
 	prefix: "",
 	theme: {
@@ -17,8 +18,19 @@ export default {
 				'2xl': '1400px'
 			}
 		},
+		fontFamily: {
+			display: ['Cormorant Garamond', 'serif'],
+			sans: ['Inter', 'sans-serif'],
+		},
 		extend: {
 			colors: {
+				'rose-dust': '#B8808A',
+				'rose-light': '#C99AA3',
+				'rose-pale': '#F0E3E5',
+				'cream': '#F8F4EF',
+				'beige': '#EDE5D8',
+				'ink': '#2E2420',
+				'ink-muted': '#7A6A64',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
