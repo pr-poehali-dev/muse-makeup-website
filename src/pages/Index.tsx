@@ -102,7 +102,7 @@ function RevealTitle({
 }
 
 export default function Index() {
-  const { dark, toggle } = useTheme();
+  const { toggle } = useTheme();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -116,7 +116,7 @@ export default function Index() {
   };
 
   return (
-    <div style={{ backgroundColor: 'var(--cream)', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: 'var(--bg)', minHeight: '100vh' }}>
 
       {/* ── NAV ── */}
       <nav
