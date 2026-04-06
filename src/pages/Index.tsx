@@ -1,4 +1,25 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Icon from '@/components/ui/icon';
+
+function useTheme() {
+  const [dark, setDark] = useState(() => {
+    const stored = localStorage.getItem('muse-theme');
+    if (stored) return stored === 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (dark) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('muse-theme', dark ? 'dark' : 'light');
+  }, [dark]);
+
+  return { dark, toggle: () => setDark((d) => !d) };
+}
 
 const IMAGES = {
   hero: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1400&q=90&fit=crop',
@@ -81,6 +102,8 @@ function RevealTitle({
 }
 
 export default function Index() {
+  const { dark, toggle } = useTheme();
+
   useEffect(() => {
     const timer = setTimeout(() => {
       document.querySelectorAll('.hero-el').forEach((el) => el.classList.add('is-visible'));
@@ -130,9 +153,23 @@ export default function Index() {
             </button>
           ))}
         </div>
-        <button onClick={() => scrollTo('booking')} className="btn-rose px-6 py-3">
-          Записаться
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={toggle}
+            className="theme-toggle"
+            aria-label="Переключить тему"
+          >
+            <span className="theme-icon theme-icon-sun" style={{ color: 'var(--ink-muted)' }}>
+              <Icon name="Sun" size={15} />
+            </span>
+            <span className="theme-icon theme-icon-moon" style={{ color: 'var(--ink-muted)' }}>
+              <Icon name="Moon" size={15} />
+            </span>
+          </button>
+          <button onClick={() => scrollTo('booking')} className="btn-rose px-6 py-3">
+            Записаться
+          </button>
+        </div>
       </nav>
 
       {/* ── HERO ── */}
@@ -191,7 +228,7 @@ export default function Index() {
       </section>
 
       {/* ── SERVICES ── */}
-      <section id="services" className="px-8 md:px-16 py-32">
+      <section id="services" className="px-8 md:px-16 py-32" style={{ backgroundColor: 'var(--bg)' }}>
         <RevealTitle delay={0.05}>
           <span
             className="font-display"
@@ -208,7 +245,7 @@ export default function Index() {
 
         <div
           className="grid md:grid-cols-3 mt-16"
-          style={{ borderTop: '1px solid var(--beige)' }}
+          style={{ borderTop: '1px solid var(--border-color)' }}
         >
           {[
             {
@@ -258,7 +295,7 @@ export default function Index() {
       </section>
 
       {/* ── PORTFOLIO ── */}
-      <section id="portfolio" className="px-8 md:px-16 pb-32">
+      <section id="portfolio" className="px-8 md:px-16 pb-32" style={{ backgroundColor: 'var(--bg)' }}>
         <RevealTitle delay={0.05}>
           <span
             className="font-display"
@@ -311,7 +348,7 @@ export default function Index() {
       </section>
 
       {/* ── MASTERCLASS ── */}
-      <section id="masterclass" style={{ backgroundColor: 'var(--beige)' }} className="py-32 px-8 md:px-16">
+      <section id="masterclass" style={{ backgroundColor: 'var(--bg-alt)' }} className="py-32 px-8 md:px-16">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-20 items-center">
           <div>
             <RevealBlur delay={0.05}>
@@ -389,7 +426,7 @@ export default function Index() {
       </section>
 
       {/* ── ABOUT ── */}
-      <section id="about" className="py-32 px-8 md:px-16">
+      <section id="about" className="py-32 px-8 md:px-16" style={{ backgroundColor: 'var(--bg)' }}>
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-20 items-center">
           <RevealBlur delay={0.1} className="photo-wrap order-2 md:order-1" style={{ height: '600px' }}>
             <img
@@ -463,7 +500,7 @@ export default function Index() {
       </section>
 
       {/* ── BOOKING ── */}
-      <section id="booking" style={{ backgroundColor: 'var(--beige)' }} className="py-32 px-8 md:px-16">
+      <section id="booking" style={{ backgroundColor: 'var(--bg-alt)' }} className="py-32 px-8 md:px-16">
         <div className="max-w-lg mx-auto">
           <div className="text-center mb-16">
             <RevealBlur delay={0.05}>
@@ -528,7 +565,7 @@ export default function Index() {
       {/* ── FOOTER ── */}
       <footer
         className="py-10 px-8 md:px-16 flex flex-col md:flex-row items-center justify-between gap-5"
-        style={{ borderTop: '1px solid var(--beige)' }}
+        style={{ borderTop: '1px solid var(--border-color)', backgroundColor: 'var(--bg)' }}
       >
         <span
           className="font-display"

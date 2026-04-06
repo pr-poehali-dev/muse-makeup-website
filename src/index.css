@@ -4,68 +4,144 @@
 
 @layer base {
   :root {
+    /* ── Light ── */
     --background: 36 25% 97%;
     --foreground: 25 15% 18%;
-
     --card: 36 20% 95%;
     --card-foreground: 25 15% 18%;
-
     --popover: 36 20% 95%;
     --popover-foreground: 25 15% 18%;
-
-    --primary: 345 25% 62%;
+    --primary: 345 25% 55%;
     --primary-foreground: 36 25% 97%;
-
     --secondary: 36 20% 92%;
     --secondary-foreground: 25 15% 18%;
-
     --muted: 36 15% 90%;
     --muted-foreground: 25 10% 50%;
-
-    --accent: 345 25% 62%;
+    --accent: 345 25% 55%;
     --accent-foreground: 36 25% 97%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 36 25% 97%;
-
     --border: 36 15% 86%;
     --input: 36 15% 86%;
-    --ring: 345 25% 62%;
-
+    --ring: 345 25% 55%;
     --radius: 0.25rem;
 
-    /* MUSE brand tokens */
-    --cream: #f8f4ef;
-    --beige: #ede5d8;
-    --rose-dust: #b8808a;
-    --rose-light: #c99aa3;
-    --rose-pale: #f0e3e5;
+    /* MUSE brand — light */
+    --bg: #f8f4ef;
+    --bg-alt: #ede5d8;
     --ink: #2e2420;
     --ink-muted: #7a6a64;
+    --rose: #b8808a;
+    --rose-hover: #c99aa3;
+    --border-color: #ddd3c8;
+    --nav-bg: rgba(248, 244, 239, 0.88);
+    --section-line: rgba(180, 160, 148, 0.35);
 
     --sidebar-background: 36 25% 97%;
     --sidebar-foreground: 25 15% 18%;
-    --sidebar-primary: 345 25% 62%;
+    --sidebar-primary: 345 25% 55%;
     --sidebar-primary-foreground: 36 25% 97%;
     --sidebar-accent: 36 20% 92%;
     --sidebar-accent-foreground: 25 15% 18%;
     --sidebar-border: 36 15% 86%;
-    --sidebar-ring: 345 25% 62%;
+    --sidebar-ring: 345 25% 55%;
+  }
+
+  .dark {
+    /* ── Dark ── */
+    --background: 20 12% 10%;
+    --foreground: 36 20% 88%;
+    --card: 20 12% 13%;
+    --card-foreground: 36 20% 88%;
+    --popover: 20 12% 13%;
+    --popover-foreground: 36 20% 88%;
+    --primary: 345 30% 62%;
+    --primary-foreground: 20 12% 10%;
+    --secondary: 20 10% 18%;
+    --secondary-foreground: 36 20% 88%;
+    --muted: 20 10% 18%;
+    --muted-foreground: 36 10% 55%;
+    --accent: 345 30% 62%;
+    --accent-foreground: 20 12% 10%;
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 36 20% 88%;
+    --border: 20 10% 22%;
+    --input: 20 10% 22%;
+    --ring: 345 30% 62%;
+
+    /* MUSE brand — dark */
+    --bg: #1a1512;
+    --bg-alt: #231e1a;
+    --ink: #ede5d8;
+    --ink-muted: #9a8880;
+    --rose: #c99aa3;
+    --rose-hover: #d8aeb6;
+    --border-color: #332b26;
+    --nav-bg: rgba(26, 21, 18, 0.92);
+    --section-line: rgba(100, 80, 70, 0.35);
+
+    --sidebar-background: 20 12% 10%;
+    --sidebar-foreground: 36 20% 88%;
+    --sidebar-primary: 345 30% 62%;
+    --sidebar-primary-foreground: 20 12% 10%;
+    --sidebar-accent: 20 10% 18%;
+    --sidebar-accent-foreground: 36 20% 88%;
+    --sidebar-border: 20 10% 22%;
+    --sidebar-ring: 345 30% 62%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
   html {
     scroll-behavior: smooth;
   }
 
+  /* Global theme transition */
+  *,
+  *::before,
+  *::after {
+    transition:
+      background-color 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Scroll-reveal — override global transition */
+  .reveal-blur {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(20px);
+    transition:
+      opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1) !important,
+      filter 1.4s cubic-bezier(0.22, 1, 0.36, 1) !important,
+      transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+
+  .reveal-blur.is-visible {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+  }
+
+  .reveal-title {
+    overflow: hidden;
+    display: block;
+  }
+
+  .reveal-title span {
+    display: block;
+    transform: translateY(110%);
+    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+
+  .reveal-title.is-visible span {
+    transform: translateY(0);
+  }
+
   body {
-    @apply bg-background text-foreground;
-    background-color: var(--cream);
+    @apply border-border;
+    background-color: var(--bg);
     color: var(--ink);
     font-family: "Inter", sans-serif;
     font-weight: 300;
@@ -73,68 +149,18 @@
   }
 }
 
-/* Typography */
+/* ── Typography ── */
 .font-display {
   font-family: "Cormorant Garamond", serif;
 }
 
-/* Scroll reveal — blur to clear */
-.reveal-blur {
-  opacity: 0;
-  filter: blur(12px);
-  transform: translateY(20px);
-  transition:
-    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 1.4s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.reveal-blur.is-visible {
-  opacity: 1;
-  filter: blur(0px);
-  transform: translateY(0);
-}
-
-/* Clip-path title reveal */
-.reveal-title {
-  overflow: hidden;
-  display: block;
-}
-
-.reveal-title span {
-  display: block;
-  transform: translateY(110%);
-  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.reveal-title.is-visible span {
-  transform: translateY(0);
-}
-
-/* Stagger delays */
-.delay-1 {
-  transition-delay: 0.1s;
-}
-.delay-2 {
-  transition-delay: 0.25s;
-}
-.delay-3 {
-  transition-delay: 0.45s;
-}
-.delay-4 {
-  transition-delay: 0.65s;
-}
-.delay-5 {
-  transition-delay: 0.85s;
-}
-
-/* Photo hover zoom */
+/* ── Photo zoom ── */
 .photo-wrap {
   overflow: hidden;
 }
 
 .photo-wrap img {
-  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
   will-change: transform;
 }
 
@@ -142,15 +168,14 @@
   transform: scale(1.04);
 }
 
-/* Booking button */
+/* ── CTA button ── */
 .btn-rose {
-  background-color: var(--rose-dust);
-  color: var(--cream);
+  background-color: var(--rose);
+  color: var(--bg);
   position: relative;
   overflow: hidden;
   border: none;
   cursor: pointer;
-  transition: color 0.4s ease;
   letter-spacing: 0.12em;
   font-family: "Inter", sans-serif;
   font-weight: 400;
@@ -164,22 +189,22 @@
   inset: 0;
   background: radial-gradient(
     circle at center,
-    var(--rose-light) 0%,
+    var(--rose-hover) 0%,
     transparent 70%
   );
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.5s ease !important;
 }
 
 .btn-rose:hover::before {
   opacity: 1;
 }
 
-/* Form inputs */
+/* ── Form inputs ── */
 .muse-input {
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--beige);
+  border-bottom: 1px solid var(--border-color);
   border-radius: 0;
   padding: 12px 0;
   font-family: "Inter", sans-serif;
@@ -188,62 +213,70 @@
   color: var(--ink);
   width: 100%;
   outline: none;
-  transition: border-color 0.4s ease;
 }
 
 .muse-input::placeholder {
   color: var(--ink-muted);
-  font-weight: 300;
 }
 
 .muse-input:focus {
-  border-bottom-color: var(--rose-dust);
+  border-bottom-color: var(--rose);
 }
 
-/* Section divider */
+/* ── Divider ── */
 .muse-divider {
   width: 40px;
   height: 1px;
-  background-color: var(--rose-dust);
+  background-color: var(--rose);
   margin: 0 auto;
 }
 
-/* Nav */
-.muse-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  mix-blend-mode: normal;
+/* ── Theme toggle ── */
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-/* Clip reveal section */
-.section-reveal {
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+.theme-toggle:hover {
+  border-color: var(--rose);
 }
 
-.section-reveal.is-visible {
-  clip-path: inset(0 0 0% 0);
+.theme-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.4s ease !important;
 }
 
-/* Asymmetric grid photo items */
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  gap: 16px;
+.theme-icon-sun {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
 }
 
-@media (max-width: 768px) {
-  .portfolio-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+.dark .theme-icon-sun {
+  transform: translateY(-32px) rotate(30deg);
+  opacity: 0;
 }
 
-@media (max-width: 480px) {
-  .portfolio-grid {
-    grid-template-columns: 1fr;
-  }
+.theme-icon-moon {
+  transform: translateY(32px) rotate(-30deg);
+  opacity: 0;
+}
+
+.dark .theme-icon-moon {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
 }
