@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const IMAGES = {
   hero: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1400&q=90&fit=crop',

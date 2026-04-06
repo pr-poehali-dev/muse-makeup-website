@@ -1,3 +1,4 @@
+import React from 'react';
 import { IMAGES, RevealBlur, RevealTitle } from './shared';
 
 interface HeroServicesProps {
